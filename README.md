@@ -48,26 +48,30 @@ orm.createTable("Users", [
 ### Inserting Data
 
 ```js
-orm.insert("Users", { id: 1, name: "Alice", email: "alice@example.com" });
+orm.table("Users");
+orm.insert({ id: 1, name: "Alice", email: "alice@example.com" });
 ```
 
 ### Querying Data
 
 ```js
-const users = orm.select("Users", "name, email", "id = 1");
+orm.table("Users");
+const users = orm.select("name, email", "id = 1");
 Logger.log(users);
 ```
 
 ### Updating Data
 
 ```js
-orm.update("Users", { name: "Alice Smith" }, "id = 1");
+orm.table("Users");
+orm.update({ name: "Alice Smith" }, "id = 1");
 ```
 
 ### Deleting Data
 
 ```js
-orm.delete("Users", "id = 1");
+orm.table("Users");
+orm.delete("id = 1");
 ```
 
 ### Example: Working with Google Sheets
@@ -75,20 +79,22 @@ orm.delete("Users", "id = 1");
 ```js
 const sheetOrm = AlaORMGS.load();
 sheetOrm.createTable("Orders", [
-  { name: "order_id", type: "NUMBER", primaryKey: true },
-  { name: "customer", type: "STRING" },
-  { name: "total", type: "NUMBER" }
+  { name: "order_id" },
+  { name: "customer" },
+  { name: "total" }
 ]);
 
-sheetOrm.insert("Orders", { order_id: 101, customer: "Bob", total: 250 });
-const orders = sheetOrm.select("Orders");
+sheetOrm.table("Orders")
+sheetOrm.insert({ order_id: 101, customer: "Bob", total: 250 });
+const orders = sheetOrm.select("order_id");
 Logger.log(orders);
 ```
 
 ### Example: Filtering and Sorting
 
 ```js
-const results = orm.select("Users", "*", "name LIKE 'A%' ORDER BY name ASC");
+orm.table("Users");
+const results = orm.select("name", "name LIKE 'A%' ORDER BY name ASC");
 Logger.log(results);
 ```
 
